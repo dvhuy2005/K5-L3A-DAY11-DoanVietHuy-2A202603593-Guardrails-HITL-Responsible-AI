@@ -162,3 +162,24 @@ pip install -r requirements.txt
 Rồi mở [`CHECKPOINTS.md`](CHECKPOINTS.md) và làm lần lượt Checkpoint 1 → 5.
 
 Nộp theo [`SUBMISSION.md`](SUBMISSION.md) · Quy định: [`RULES.md`](RULES.md).
+
+---
+
+## Bài làm cá nhân
+
+- Học viên: **Đoàn Việt Huy** — **2A202603593**, lớp **L3A**.
+- Checkpoint 2: lọc prompt injection và câu lạc chủ đề trước khi gọi model; che thông tin nhạy cảm sau khi model trả lời.
+- Checkpoint 3: giới hạn lượt hỏi theo từng người, ghi nhật ký, theo dõi cảnh báo và chỉ cho dữ liệu sạch tới đúng miền VinBank.
+- Checkpoint 4: năm kiểu câu thử Red và Red Advance nằm trong `src/attacks/attacks.py`.
+
+Chạy từ gốc repo sau khi tạo `.venv`, cài `requirements.txt` và điền hai API key **khác nhau** vào `.env`:
+
+```powershell
+.\.venv\Scripts\python.exe src/main.py --part 2
+.\.venv\Scripts\python.exe src/main.py --part 3
+.\.venv\Scripts\python.exe src/main.py --part 4
+.\.venv\Scripts\python.exe -m pytest tests/smoke tests/public tests/student -q
+.\.venv\Scripts\python.exe scripts/grade.py --submission-dir . --out outputs/grade_report.json
+```
+
+`outputs/` chỉ chứa kết quả do các lệnh trên tạo ra. `.env` không được commit. Bài có sử dụng AI hỗ trợ viết và kiểm tra code; học viên cần đọc, chạy và giải thích được từng lớp bảo vệ trước khi nộp.
