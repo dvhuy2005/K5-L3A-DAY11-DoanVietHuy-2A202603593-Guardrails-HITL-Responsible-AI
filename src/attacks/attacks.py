@@ -14,6 +14,7 @@ Protected data (nguồn leak):
 
 Blue (create_blue_agent) không bị tấn công ở CP4.
 """
+import asyncio
 import json
 import re
 from pathlib import Path
@@ -321,7 +322,9 @@ async def run_attacks(
         print(f"Input: {attack['input'][:100]}...")
 
         try:
-            response, _ = await chat_with_agent(agent, runner, attack["input"])
+            response, _ = await asyncio.wait_for(
+                chat_with_agent(agent, runner, attack["input"]), timeout=45
+            )
             outcome = classify_attack_outcome(
                 attack["input"], response, target_name=target_name
             )
@@ -364,6 +367,9 @@ async def run_attacks(
             print(f"Error: {e}")
 
         results.append(result)
+        if save_json:
+            # Preserve real completed attempts if a later provider call stalls.
+            write_run_attack_json(results, target_name=target_name, filepath=output_path)
 
     print("\n" + "=" * 60)
     print(f"Total: {len(results)} attacks on {target_name}")
